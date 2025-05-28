@@ -1,154 +1,212 @@
-# Multi-Agent-Finance-Assistant
-A powerful multi-agent financial assistant system built using FastAPI, Streamlit, OpenAI, and real-time financial APIs. This application supports intelligent query handling, live market data ingestion, voice interaction, risk analysis, document scraping, and more.
+# 💼 Multi-Agent Finance Assistant
 
-🚀 Features
-📈 Live Market Data from Polygon.io, Finnhub, Alpha Vantage, and Yahoo Finance.
+A powerful **multi-agent financial assistant** built with FastAPI, Streamlit, OpenAI, and real-time finance APIs. It supports intelligent chat and voice-based interaction for portfolio analytics, market research, and financial insights.
 
-🔍 Portfolio Analysis for diversification, exposure, and risk metrics.
+---
 
-🧠 LLM-Powered Language Agent for financial reasoning and synthesis.
+## ✨ Features
 
-📑 Retriever Agent to query stored portfolio data.
+* 📊 **Real-time Market Data** via Polygon, Finnhub, Alpha Vantage, and Yahoo
+* 🔍 **Portfolio Analysis**: Exposure, diversification, volatility, and risk
+* 🧠 **LLM-Powered Chat Agent** with OpenAI GPT
+* 📚 **Retriever Agent** for portfolio search and summaries
+* 🔖 **Web Scraping Agent**: News, earnings, and sentiment
+* 🎧 **Voice Agent**: Transcribe and speak queries/responses
+* 🌐 **Streamlit UI**: Easy-to-use chat and voice dashboard
 
-📰 Scraping Agent for real-time news, earnings, and sentiment.
+---
 
-🗣️ Voice Agent supporting audio transcription (Whisper) and TTS.
+## 🧠 Agent Overview
 
-🎧 Streamlit Dashboard for interactive chat and voice-based finance Q&A.
+### 1. 🔍 **API Agent** (`api_agent.py`)
 
-🧩 Architecture
-less
-Copy
-Edit
-[ Streamlit UI ] --> [ Orchestrator Service ]
-                           |
-    -----------------------------------------------------
-    |       |           |          |         |         |
-[API Agent][Retriever][Analysis][Language][Scraping][Voice]
-📁 Project Structure
-bash
-Copy
-Edit
-finance-assistant/
-│
+* Fetches **live market data** for stock symbols
+* Sources: Polygon.io, Finnhub, Alpha Vantage
+* Endpoint: `/market-data`
+
+### 2. 📊 **Analysis Agent** (`analysis_agent.py`)
+
+* Analyzes portfolio risk and diversification
+* Computes: Exposure, Volatility, Sector/Regional Breakdown, Risk Score
+* Endpoint: `/analyze`
+
+### 3. 🧠 **Language Agent** (`language_agent.py`)
+
+* Uses OpenAI GPT to synthesize responses from:
+
+  * Market data
+  * Portfolio analysis
+  * Retrieved documents
+* Endpoint: `/synthesize`
+
+### 4. 📆 **Retriever Agent** (`retriever_agent.py`)
+
+* Searches portfolio documents by keywords or summary
+* Endpoint: `/retrieve`
+
+### 5. 🔍 **Scraping Agent** (`scraping_agent.py`)
+
+* Scrapes financial news, earnings reports, and social sentiment
+* Sources: Yahoo Finance, MarketWatch, Financial Modeling Prep (demo)
+* Endpoint: `/scrape`
+
+### 6. 🎧 **Voice Agent** (`voice_agent.py`)
+
+* 📻 **Speech-to-Text**: Upload audio files for transcription (OpenAI Whisper)
+* 🎤 **Text-to-Speech**: Speak AI responses (OpenAI TTS)
+* Endpoints: `/transcribe`, `/synthesize`
+
+---
+
+## 🖋️ Architecture Overview
+
+```
+[ Streamlit UI ] --> [ Orchestrator ]
+                          |
+      ------------------------------------------------
+      |      |        |        |        |         |
+    [API] [Scraper] [Retriever] [Analysis] [Language] [Voice]
+```
+
+---
+
+## 📁 Project Structure
+
+```
+.
 ├── agents/
-│   ├── analysis_agent.py
 │   ├── api_agent.py
+│   ├── analysis_agent.py
 │   ├── language_agent.py
 │   ├── retriever_agent.py
 │   ├── scraping_agent.py
 │   └── voice_agent.py
 │
-├── config/
-│   └── settings.py         # Environment variable settings
-│
-├── data/
-│   ├── portfolio.json      # Default portfolio
-│
-├── data_ingestion/
-│   ├── document_loader.py
-│   └── embedding_service.py
-│
-├── orchestrator/
-│   ├── main.py             # Orchestrates all agents
-│
-├── streamlit_app/
-│   ├── app.py              # Main Streamlit interface
-│
-├── .env                    # API keys
+├── config/settings.py
+├── orchestrator/main.py
+├── streamlit_app/app.py
+├── data/portfolio.json
+├── .env
 ├── requirements.txt
 └── README.md
-⚙️ Setup Instructions
-1. Clone the Repository
-bash
-Copy
-Edit
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
 git clone https://github.com/yourusername/finance-assistant.git
 cd finance-assistant
-2. Install Requirements
-bash
-Copy
-Edit
+```
+
+### 2. Install Requirements
+
+```bash
 python -m venv venv
-source venv/bin/activate   # or venv\Scripts\activate on Windows
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
-3. Configure Environment Variables
-Create a .env file in the root directory:
+```
 
-env
-Copy
-Edit
-POLYGON_API_KEY=your_polygon_api_key
-FINNHUB_API_KEY=your_finnhub_api_key
-ALPHA_VANTAGE_API_KEY=your_alpha_vantage_api_key
-OPENAI_API_KEY=your_openai_api_key
+### 3. Environment Variables
+
+Create a `.env` file:
+
+```env
+POLYGON_API_KEY=your_key
+FINNHUB_API_KEY=your_key
+ALPHA_VANTAGE_API_KEY=your_key
+OPENAI_API_KEY=your_key
 PORTFOLIO_FILE=data/portfolio.json
-🧪 Run Services
-Each agent runs independently on a port:
+```
 
-bash
-Copy
-Edit
-# Run orchestrator
+---
+
+## 💪 Run Agents & UI
+
+### Run All Agents (separately):
+
+```bash
 uvicorn orchestrator.main:app --port 8000
-
-# Run agents
 uvicorn agents.api_agent:app --port 8001
 uvicorn agents.scraping_agent:app --port 8002
 uvicorn agents.retriever_agent:app --port 8003
 uvicorn agents.analysis_agent:app --port 8004
 uvicorn agents.language_agent:app --port 8005
 uvicorn agents.voice_agent:app --port 8006
-🌐 Run the Frontend
-bash
-Copy
-Edit
+```
+
+### Run Streamlit UI:
+
+```bash
 streamlit run streamlit_app/app.py
-You can then access the UI at http://localhost:8501.
+```
 
-🗣️ Voice Interaction
-The voice agent uses OpenAI Whisper for transcription and TTS-1 for speech synthesis. Ensure audio files are under 25MB and in supported formats (WAV, MP3, M4A, etc.).
+---
 
-🧪 Example Use Cases
-"Show me the risk exposure in my tech holdings."
+## 🔊 Voice Interaction
 
-"What is the latest news about NVIDIA?"
+### 🎧 Upload Audio:
 
-"Summarize my portfolio performance."
+* WAV, MP3, M4A, etc. (< 25MB)
+* Transcribed to text via OpenAI Whisper
 
-Upload audio: "How is the stock market doing today?" ➝ Get analysis ➝ Listen to voice output.
+### 🎤 Generate Voice:
 
-📊 Agent Health
-Each agent provides a /health endpoint:
+* Use OpenAI TTS to generate spoken response
+* Supports Alloy, Echo, Nova, Shimmer, etc.
 
-http://localhost:8001/health
+---
 
-http://localhost:8002/health
+## 🔍 Sample Queries
 
-...
+| Type     | Example                                              |
+| -------- | ---------------------------------------------------- |
+| Text     | "What's the risk level of my portfolio?"             |
+| Voice    | Upload MP3: "How is the semiconductor sector doing?" |
+| Market   | "Show me news about AAPL"                            |
+| Earnings | "Any surprises in MSFT's earnings?"                  |
 
-Use these to monitor service status in the Streamlit sidebar.
+---
 
-✅ TODOs / Improvements
- Deploy using Docker Compose or Kubernetes.
+## 📈 Agent Health Checks
 
- Enhance document scraping (e.g., real SEC API).
+Each agent exposes `/health`:
 
- Add persistent vector store for document embeddings.
+```
+http://localhost:8001/health  # API Agent
+http://localhost:8004/health  # Analysis Agent
+...etc.
+```
 
- Enable OAuth2 for user-based portfolios.
+Streamlit shows a real-time dashboard with agent status.
 
-🤝 Contributing
-Fork the repository.
+---
 
-Create your branch (git checkout -b feature/xyz)
+## 💪 Contributing
 
-Commit changes (git commit -am 'Add xyz')
+1. Fork this repo
+2. Create a new branch: `feature/xyz`
+3. Commit changes
+4. Open Pull Request
 
-Push (git push origin feature/xyz)
+---
 
-Create a Pull Request.
+## 📄 License
 
-📄 License
-This project is licensed under the MIT License.
+MIT License. See `LICENSE` file.
 
+---
+
+## 🌟 Credits
+
+Built by combining the power of:
+
+* OpenAI APIs
+* FastAPI microservices
+* Streamlit UI
+* BeautifulSoup + Aiohttp
+* SentenceTransformers / Tfidf
+* Alpha Vantage, Finnhub, Polygon, Yahoo Finance APIs
