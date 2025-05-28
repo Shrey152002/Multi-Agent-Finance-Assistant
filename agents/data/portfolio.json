@@ -1,0 +1,41 @@
+ {
+    "description": "Portfolio data structure",
+    "example": [
+        {
+            "symbol": "AAPL",
+            "name": "Apple Inc.",
+            "shares": 10,
+            "avg_cost": 150.00,
+            "current_value": 1750.00,
+            "sector": "Technology",
+            "region": "US",
+            "return": 250.00,
+            "return_percent": 16.67,
+            "last_updated": "2024-01-15T10:30:00Z"
+        },
+        {
+            "symbol": "MSFT",
+            "name": "Microsoft Corporation",
+            "shares": 5,
+            "avg_cost": 300.00,
+            "current_value": 1650.00,
+            "sector": "Technology",
+            "region": "US",
+            "return": 150.00,
+            "return_percent": 10.00,
+            "last_updated": "2024-01-15T10:30:00Z"
+        },
+        {
+            "symbol": "TSM",
+            "name": "Taiwan Semiconductor",
+            "shares": 20,
+            "avg_cost": 100.00,
+            "current_value": 2200.00,
+            "sector": "Semiconductors",
+            "region": "Asia",
+            "return": 200.00,
+            "return_percent": 10.00,
+            "last_updated": "2024-01-15T10:30:00Z"
+        }
+    ]
+}
